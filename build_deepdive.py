@@ -131,6 +131,7 @@ def convert(md):
 
 md = open(SRC, encoding="utf-8").read()
 content = convert(md)
+content = re.sub(r"<h1>.*?</h1>", "<h1>Raw Talk, Open Doors — Deep Dive</h1>", content, count=1)
 
 # granular-thread expansions — full sections from deepdive-expansions.md (keyed by <!--#id--> markers)
 exp_raw = open(EXP, encoding="utf-8").read()
@@ -146,7 +147,7 @@ for k in range(1, len(parts), 2):
 
 PAGE = """<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Freeflow — Deep Dive</title>
+<title>Raw Talk, Open Doors — Deep Dive</title>
 <style>
  :root{--ink:#e8e4d8;--ink-soft:#b8b3a4;--ink-faint:#6f6b5e;--bg:#14130f;--bg-raised:#1c1b16;--line:#2e2c24;--gold:#d8a657;--serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;--sans:'Avenir Next',Avenir,'Segoe UI',system-ui,sans-serif;}
  *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.74;font-size:18px;}
@@ -171,7 +172,7 @@ PAGE = """<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
  section.seed{border-left:2px solid var(--line);padding-left:16px;margin:18px 0;}
  .wrap{padding-top:80px;}
 </style></head><body>
-<div class="backbar"><a href="freeflow-reader.html">← back to the reader</a></div>
+<div class="backbar"><a href="freeflow-reader.html">← back to Raw Talk, Open Doors</a></div>
 <div class="wrap">
 __CONTENT__
 __SEEDS__

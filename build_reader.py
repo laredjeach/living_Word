@@ -84,7 +84,7 @@ HTML = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Freeflow — Annotated Reader</title>
+<title>Raw Talk, Open Doors — Annotated Reader</title>
 <style>
   :root {
     --ink:#e8e4d8; --ink-soft:#b8b3a4; --ink-faint:#6f6b5e;
@@ -101,8 +101,19 @@ HTML = """<!DOCTYPE html>
     line-height:1.72; font-size:19px; letter-spacing:0.01em; }
   .wrap { max-width:720px; margin:0 auto; padding:64px 28px 240px; }
   header.masthead { margin-bottom:56px; padding-bottom:28px; border-bottom:1px solid var(--line); }
-  .eyebrow { font-family:var(--sans); font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 18px; }
-  h1.title { font-size:40px; line-height:1.08; font-weight:500; margin:0 0 18px; letter-spacing:-0.01em; }
+  .title-lockup { display:grid; grid-template-columns:78px minmax(0,1fr); gap:20px; align-items:center; margin:0 0 22px; }
+  .portal-mark { width:78px; height:auto; overflow:visible; }
+  .portal-frame { fill:none; stroke:var(--ink-faint); stroke-width:1.2; vector-effect:non-scaling-stroke; }
+  .portal-frame.mid { opacity:0.72; }
+  .portal-frame.inner { stroke:var(--t1); opacity:0.78; }
+  .portal-ray { fill:none; stroke:var(--t1); stroke-width:1; opacity:0.5; vector-effect:non-scaling-stroke; }
+  .portal-seed { fill:var(--t1); filter:drop-shadow(0 0 5px rgba(216,166,87,0.5)); }
+  .eyebrow { font-family:var(--sans); font-size:10px; letter-spacing:0.32em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 10px; }
+  h1.title { font-size:43px; line-height:0.98; font-weight:500; margin:0; letter-spacing:-0.025em; }
+  .title-line { display:block; }
+  .title-line.open { color:var(--t1); font-style:italic; }
+  .download-link { display:inline-block; margin-top:13px; font-family:var(--sans); font-size:10.5px; letter-spacing:0.08em; color:var(--ink-faint); text-decoration:none; border-bottom:1px dotted transparent; transition:color 140ms ease,border-color 140ms ease; }
+  .download-link:hover,.download-link:focus-visible { color:var(--ink-soft); border-bottom-color:var(--ink-faint); }
   .standfirst { font-family:var(--sans); font-size:15px; line-height:1.6; color:var(--ink-soft); max-width:60ch; }
   .howto { font-family:var(--sans); font-size:13px; line-height:1.65; color:var(--ink-faint); margin-top:22px; padding:14px 16px; border:1px solid var(--line); border-radius:8px; background:var(--bg-raised); }
   .howto b { color:var(--ink-soft); font-weight:600; }
@@ -150,7 +161,9 @@ HTML = """<!DOCTYPE html>
   @media (max-width:600px) {
     body { font-size:18px; }
     .wrap { padding:40px 20px 220px; }
-    h1.title { font-size:31px; }
+    .title-lockup { grid-template-columns:58px minmax(0,1fr); gap:15px; }
+    .portal-mark { width:58px; }
+    h1.title { font-size:34px; }
     .panel { left:16px !important; right:16px !important; bottom:16px !important; top:auto !important; width:auto; max-height:64vh; }
     .peek { display:none; }
   }
@@ -161,8 +174,22 @@ HTML = """<!DOCTYPE html>
 <div class="progress" id="progress"></div>
 <div class="wrap">
   <header class="masthead">
-    <p class="eyebrow">Freeflow · Annotated Reader</p>
-    <h1 class="title">The raw talk, with doors.</h1>
+    <div class="title-lockup">
+      <svg class="portal-mark" viewBox="0 0 90 112" role="img" aria-labelledby="portal-title portal-desc">
+        <title id="portal-title">Nested open doorways</title>
+        <desc id="portal-desc">Three thresholds open around a single point of light.</desc>
+        <path class="portal-frame" d="M9 100V42C9 21 25 7 45 7s36 14 36 35v58"/>
+        <path class="portal-frame mid" d="M20 100V45c0-16 11-27 25-27s25 11 25 27v55"/>
+        <path class="portal-frame inner" d="M31 100V49c0-10 6-18 14-18s14 8 14 18v51"/>
+        <path class="portal-ray" d="M45 55v45M45 100 8 108M45 100l37 8"/>
+        <circle class="portal-seed" cx="45" cy="53" r="2.8"/>
+      </svg>
+      <div>
+        <p class="eyebrow">Annotated transcript · a reading in depth</p>
+        <h1 class="title"><span class="title-line">Raw talk.</span><span class="title-line open">Open doors.</span></h1>
+        <a class="download-link" href="https://github.com/laredjeach/freeflow-annotated-reader/archive/refs/heads/main.zip">download complete reader (.zip) ↓</a>
+      </div>
+    </div>
     <p class="standfirst">The transcript stands exactly as spoken — nothing changed, nothing trimmed. The marked passages open onto what sits beneath them: where a line goes deeper than it looks, what it has a name for in older traditions, why it lands.</p>
     <div class="howto">
       Tap or click any <b>marked passage</b> to open its reading. One opens at a time; the last closes itself. Dismiss with the ×, a click outside, or <b>Esc</b> — then read on.

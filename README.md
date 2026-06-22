@@ -1,10 +1,10 @@
-# Freeflow Annotated Reader
+# Raw Talk, Open Doors
 
 An interactive annotated transcript with a linked deep-dive analysis.
 
 ## Read it
 
-- On GitHub Pages: open the published site URL.
+- From GitHub: choose **Code > Download ZIP**, then unzip it.
 - From a downloaded copy: open `index.html` in any modern browser.
 
 No installation, local server, or build step is needed to read it. Keep
