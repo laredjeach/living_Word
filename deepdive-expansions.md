@@ -1,9 +1,9 @@
 # Deep-Dive Expansions — the granular threads
 
 > These are the full treatments of the threads surfaced by the granular annotation pass. They are
-> built into `freeflow-deepdive.html` alongside the canonical sections. Each block is keyed by its
+> built into `living_Word-deepdive.html` alongside the canonical sections. Each block is keyed by its
 > anchor id (the `<!--#id-->` marker) so the reader's "Read full analysis →" links land here.
-> Scholarly claims verified 2026-06-21. Source canon (`freeflow-deepdive.md`) is left untouched.
+> Scholarly claims verified 2026-06-21. Source canon (`living_Word-deepdive.md`) is left untouched.
 
 <!--#expression-as-channel-->
 ## Expression as channel

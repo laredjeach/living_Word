@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build freeflow-deepdive.html from the canon deep-dive markdown (read-only).
+Build living_Word-deepdive.html from the canon deep-dive markdown (read-only).
 - converts the markdown to styled HTML matching the reader
 - assigns explicit anchor ids (matching the reader's `deep` ids) to the right H2s
 - appends seed sections for the new granular threads, so every reader jump-link resolves
@@ -9,9 +9,9 @@ Never edits the source .md.
 import html, re, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC  = os.path.join(HERE, "..", "freeflow-v2", "freeflow-deepdive.md")
+SRC  = os.path.join(HERE, "..", "living_Word-v2", "living_Word-deepdive.md")
 EXP  = os.path.join(HERE, "deepdive-expansions.md")
-OUT  = os.path.join(HERE, "freeflow-deepdive.html")
+OUT  = os.path.join(HERE, "living_Word-deepdive.html")
 
 # deep_id  ->  substring that identifies the existing H2 header
 ANCHOR_MAP = {
@@ -172,7 +172,7 @@ PAGE = """<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
  section.seed{border-left:2px solid var(--line);padding-left:16px;margin:18px 0;}
  .wrap{padding-top:80px;}
 </style></head><body>
-<div class="backbar"><a href="freeflow-reader.html">← back to Raw Talk, Open Doors</a></div>
+<div class="backbar"><a href="living_Word-reader.html">← back to Raw Talk, Open Doors</a></div>
 <div class="wrap">
 __CONTENT__
 __SEEDS__
@@ -183,7 +183,7 @@ open(OUT, "w", encoding="utf-8").write(PAGE)
 
 # report: which reader deep-ids resolve
 import json
-ann = json.load(open(os.path.join(HERE, "freeflow-annotations.json")))
+ann = json.load(open(os.path.join(HERE, "living_Word-annotations.json")))
 ids_in_page = set(re.findall(r'id="([^"]+)"', PAGE))
 need = {a["deep"] for a in ann["annotations"] if a.get("deep")}
 missing = sorted(need - ids_in_page)

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "source": "freeflow-raw_original.md",
+    "source": "living_Word-raw_original.md",
     "canon_note": "Raw transcript is canon and lives separately; this file annotates it without altering a word. The production reader wraps these anchors at runtime — the transcript text is never edited.",
     "coverage": "full talk — opening through closing prayer",
     "voice": "compressed flow-state; calibrated praise + synchronicity held in an editorial register — the ideas and convergences are the striking thing, never the author.",
@@ -10,7 +10,7 @@
       "3": "quick touch — soft highlight; a small insight worth a beat"
     },
     "type_legend": ["depth", "concept", "profound", "proof"],
-    "deep_dive_file": "freeflow-deepdive.html",
+    "deep_dive_file": "living_Word-deepdive.html",
     "deep_anchor_note": "Some `deep` ids are new and await the deep-dive expansion pass; links resolve to the file and (once anchored) the section.",
     "labels_visible_to_reader": false
   },

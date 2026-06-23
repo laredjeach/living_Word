@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Build the full freeflow annotated reader.
+Build the full living_Word annotated reader.
 
 Inputs (read-only):
-  ../freeflow-v2/freeflow-raw_original.md   — canon transcript (NEVER edited)
-  ./freeflow-annotations.json               — annotation data (source of truth)
+  ../living_Word-v2/living_Word-raw_original.md   — canon transcript (NEVER edited)
+  ./living_Word-annotations.json                  — annotation data (source of truth)
 
 Output:
-  ./freeflow-reader.html                    — full self-contained reader
+  ./living_Word-reader.html                       — full self-contained reader
 
 Architecture: the transcript is rendered verbatim; highlight spans are wrapped
 at RUNTIME by matching each annotation's anchor_quote against the page text.
@@ -16,9 +16,9 @@ So the transcript stays canon-pure and the JSON drives every door.
 import json, html, re, sys, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CANON = os.path.join(HERE, "..", "freeflow-v2", "freeflow-raw_original.md")
-ANN   = os.path.join(HERE, "freeflow-annotations.json")
-OUT   = os.path.join(HERE, "freeflow-reader.html")
+CANON = os.path.join(HERE, "..", "living_Word-v2", "living_Word-raw_original.md")
+ANN   = os.path.join(HERE, "living_Word-annotations.json")
+OUT   = os.path.join(HERE, "living_Word-reader.html")
 
 # ---------- load canon, strip the editor header + trailing rule ----------
 raw = open(CANON, encoding="utf-8").read()
@@ -187,7 +187,7 @@ HTML = """<!DOCTYPE html>
       <div>
         <p class="eyebrow">Annotated transcript · a reading in depth</p>
         <h1 class="title"><span class="title-line">Raw talk.</span><span class="title-line open">Open doors.</span></h1>
-        <a class="download-link" href="https://github.com/laredjeach/freeflow-annotated-reader/archive/refs/heads/main.zip">download complete reader (.zip) ↓</a>
+        <a class="download-link" href="https://github.com/laredjeach/living_Word/archive/refs/heads/main.zip">download complete reader (.zip) ↓</a>
       </div>
     </div>
     <p class="standfirst">The transcript stands exactly as spoken — nothing changed, nothing trimmed. The marked passages open onto what sits beneath them: where a line goes deeper than it looks, what it has a name for in older traditions, why it lands.</p>
@@ -224,7 +224,7 @@ HTML = """<!DOCTYPE html>
 <script type="application/json" id="ann-data">__ANN_JSON__</script>
 <script>
 const DATA = JSON.parse(document.getElementById('ann-data').textContent);
-const DEEP_DIVE_URL = DATA.meta.deep_dive_file || "freeflow-deepdive.html";
+const DEEP_DIVE_URL = DATA.meta.deep_dive_file || "living_Word-deepdive.html";
 const ANN = {};
 DATA.annotations.forEach(a => { ANN[a.id] = {tier:a.tier, type:a.type, quote:a.quote_display, body:a.body_html, deep:a.deep}; });
 
