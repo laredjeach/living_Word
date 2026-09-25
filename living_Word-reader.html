@@ -76,6 +76,16 @@
   .scrim { position:fixed; inset:0; z-index:50; background:transparent; opacity:0; pointer-events:none; transition:opacity 150ms ease; }
   .scrim.show { opacity:1; pointer-events:auto; }
   .progress { position:fixed; top:0; left:0; height:3px; width:0; background:var(--t1); opacity:0.55; z-index:70; transition:width 120ms ease; }
+  .player { position:fixed; left:0; right:0; bottom:0; z-index:80; display:flex; align-items:center; gap:11px;
+    background:rgba(20,19,15,0.93); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    border-top:1px solid var(--line); padding:9px 15px calc(9px + env(safe-area-inset-bottom)); }
+  .player .pl-label { font-family:var(--sans); font-size:9.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-faint); white-space:nowrap; line-height:1.35; }
+  .player .pl-label b { display:block; font-size:12px; letter-spacing:0.01em; text-transform:none; color:var(--ink-soft); font-weight:600; }
+  .player audio { flex:1; min-width:0; height:36px; }
+  .player .pl-skip { flex:none; background:var(--bg-raised); color:var(--ink-soft); border:1px solid var(--line); border-radius:8px;
+    font-family:var(--sans); font-size:11.5px; letter-spacing:0.02em; padding:8px 9px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .player .pl-skip:active { background:var(--bg-panel); color:var(--t1); }
+  @media (max-width:600px){ .player .pl-label{ display:none; } .player{ gap:8px; padding-left:11px; padding-right:11px; } }
   footer.endnote { margin-top:80px; padding-top:24px; border-top:1px solid var(--line); font-family:var(--sans); font-size:12.5px; color:var(--ink-faint); line-height:1.6; }
   @media (max-width:600px) {
     body { font-size:18px; }
@@ -91,6 +101,12 @@
 </head>
 <body>
 <div class="progress" id="progress"></div>
+<div class="player" role="region" aria-label="Raw recording player">
+  <div class="pl-label">Listen while you read<b>The raw recording</b></div>
+  <button class="pl-skip" id="plBack" aria-label="Back 15 seconds" title="Back 15s">−15s</button>
+  <audio id="rec" controls preload="metadata" src="freeflow_seed_web.m4a"></audio>
+  <button class="pl-skip" id="plFwd" aria-label="Forward 30 seconds" title="Forward 30s">+30s</button>
+</div>
 <div class="wrap">
   <header class="masthead">
     <div class="title-lockup">
@@ -317,6 +333,23 @@ const prog=document.getElementById('progress');
 window.addEventListener('scroll', ()=>{ const h=document.documentElement; const p=h.scrollTop/(h.scrollHeight-h.clientHeight); prog.style.width=(p*100)+'%'; }, {passive:true});
 document.getElementById('endnote').textContent =
   `The full talk — ${DATA.annotations.length} passages marked across three weights, each a door into the reading. The raw transcript is preserved separately as canon; this reader never edits it.`;
+
+/* raw-recording player: skip buttons, resume position, lock-screen metadata */
+(function(){
+  const rec=document.getElementById('rec'); if(!rec) return;
+  const back=document.getElementById('plBack'), fwd=document.getElementById('plFwd');
+  const skip=s=>{ const d=rec.duration||1e9; rec.currentTime=Math.max(0,Math.min(d,rec.currentTime+s)); };
+  back.addEventListener('click',()=>skip(-15));
+  fwd.addEventListener('click',()=>skip(30));
+  const KEY='lw_rec_pos';
+  rec.addEventListener('loadedmetadata',()=>{ const t=parseFloat(localStorage.getItem(KEY)||'0'); if(t>1 && t<rec.duration-2) rec.currentTime=t; });
+  rec.addEventListener('timeupdate',()=>{ if(!rec.paused) localStorage.setItem(KEY,rec.currentTime); },{passive:true});
+  if('mediaSession' in navigator){
+    navigator.mediaSession.metadata=new MediaMetadata({title:'Raw Talk, Open Doors',artist:'Living Word — raw recording',album:'Annotated Reader'});
+    navigator.mediaSession.setActionHandler('seekbackward',()=>skip(-15));
+    navigator.mediaSession.setActionHandler('seekforward',()=>skip(30));
+  }
+})();
 </script>
 </body>
 </html>
