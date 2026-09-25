@@ -41,6 +41,21 @@
   p.def { margin:0 0 0.7em; color:var(--ink-soft); font-style:italic; }
   .glossary { color:var(--ink-soft); font-style:italic; }
 
+  .frontispiece { margin:8px auto 60px; text-align:center; }
+  .frontispiece img { display:block; width:100%; height:auto;
+    -webkit-mask-image:radial-gradient(ellipse 88% 86% at 50% 50%, #000 56%, rgba(0,0,0,0.5) 80%, transparent 100%);
+    mask-image:radial-gradient(ellipse 88% 86% at 50% 50%, #000 56%, rgba(0,0,0,0.5) 80%, transparent 100%);
+    filter:drop-shadow(0 22px 54px rgba(216,166,87,0.22)); }
+  .frontispiece figcaption { font-family:var(--sans); font-size:10px; letter-spacing:0.28em;
+    text-transform:uppercase; color:var(--ink-faint); margin-top:8px; }
+  /* #2 gentle entrance — only armed when JS is present, so no-JS still shows it */
+  html.js .frontispiece { opacity:0; transform:translateY(12px);
+    transition:opacity 700ms ease, transform 700ms ease; }
+  html.js .frontispiece.revealed { opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){
+    html.js .frontispiece { opacity:1; transform:none; transition:none; } }
+  @media (max-width:600px){ .frontispiece{ margin:4px auto 44px; } }
+
   .mark { cursor:pointer; position:relative; transition:background 160ms ease, box-shadow 160ms ease, color 160ms ease; border-radius:2px; }
   .mark:focus-visible { outline:2px solid var(--t1); outline-offset:2px; }
   .mark.t3 { border-bottom:1px dotted var(--t3); color:var(--ink); }
@@ -98,6 +113,7 @@
   }
   @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -134,6 +150,12 @@
       <span class="swatch" style="background:var(--t3)"></span> a quick touch
     </div>
   </header>
+
+  <figure class="frontispiece">
+    <img src="frontispiece-lightbulb.jpg" width="1440" height="960" loading="lazy"
+      alt="A glowing lightbulb beside a contemplative sun-face, painted in warm amber and gold.">
+    <figcaption>The living word — the idea before it has a name</figcaption>
+  </figure>
 
   <main id="text">
     <p class="def">I = human being, physical, present, operating, grounded in the physical Earth-based reality.</p>
@@ -349,6 +371,18 @@ document.getElementById('endnote').textContent =
     navigator.mediaSession.setActionHandler('seekbackward',()=>skip(-15));
     navigator.mediaSession.setActionHandler('seekforward',()=>skip(30));
   }
+})();
+
+/* #2 — reveal frontispiece with a gentle fade+rise when it scrolls into view */
+(function(){
+  const fig = document.querySelector('.frontispiece');
+  if(!fig) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(reduce || !('IntersectionObserver' in window)){ fig.classList.add('revealed'); return; }
+  const io = new IntersectionObserver((entries,obs)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ fig.classList.add('revealed'); obs.disconnect(); } });
+  }, {threshold:0.2});
+  io.observe(fig);
 })();
 </script>
 </body>
